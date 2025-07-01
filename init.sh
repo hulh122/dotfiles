@@ -8,7 +8,7 @@ dotfiles_dir="$HOME"/dotfiles
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 # copy zsh config
-ln -sf $dotfiles_dir/.zshrc $HOME/.zshrc
+sudo cp $dotfiles_dir/.zshrc $HOME/.zshrc
 source $HOME/.zshrc
 
 # copy bin file to user/local/bin
