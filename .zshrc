@@ -4,6 +4,8 @@ ZSH_THEME="robbyrussell"
 
 plugins=(git)
 
+source $ZSH/oh-my-zsh.sh
+
 export http_proxy=http://sg-squid-test.zhenguanyu.com:80
 export https_proxy=http://sg-squid-test.zhenguanyu.com:80
 
