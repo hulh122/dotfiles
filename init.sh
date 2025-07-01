@@ -9,6 +9,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # copy zsh config
 ln -sf $dotfiles_dir/.zshrc $HOME/.zshrc
+source $HOME/.zshrc
 
 # copy bin file to user/local/bin
 sudo cp $dotfiles_dir/bin/dc /usr/local/bin
