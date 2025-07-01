@@ -1,1 +1,4 @@
-/usr/local/bin/dc
+echo "删除并新建分支 $1"
+git branch -D $1
+git checkout -b $1
+
