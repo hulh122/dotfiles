@@ -16,6 +16,6 @@ alias pi="pnpm i"
 alias web="cd /workspaces/moxt/web"
 alias editor="cd /workspaces/moxt/editor"
 # pnpm
-export PNPM_HOME="/Users/yuma/Library/pnpm"
+export PNPM_HOME="$HOME/.pnpm-global"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
