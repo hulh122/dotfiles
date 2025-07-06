@@ -92,17 +92,22 @@ EOF
 
 echo "zsh configuration setup completed"
 
-# Install vim on Ubuntu if not exists
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    if [ "$ID" = "ubuntu" ] && ! command -v vim >/dev/null 2>&1; then
-        echo "Ubuntu system detected and vim not found, installing vim..."
-        sudo apt install -y software-properties-common
-        sudo add-apt-repository -y ppa:jonathonf/vim
-        sudo apt update
-        sudo apt install -y vim
-        echo "vim installation completed"
+# Install vim if not exists
+if ! command -v vim >/dev/null 2>&1; then
+    echo "vim not found, attempting to install..."
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [ "$ID" = "ubuntu" ]; then
+            echo "Ubuntu system detected, installing vim..."
+            sudo apt install -y software-properties-common
+            sudo add-apt-repository -y ppa:jonathonf/vim
+            sudo apt update
+            sudo apt install -y vim
+            echo "vim installation completed"
+        fi
     fi
+else
+    echo "vim already exists, skipping installation"
 fi
 
 # Install vim configuration
@@ -118,12 +123,5 @@ echo "zimfw installation completed"
 
 echo "Installing claude code..."
 sudo npm install -g @anthropic-ai/claude-code
-claude mcp add playwright npx @playwright/mcp@latest
-
-# Install start_bot script
-echo "Installing start_bot script..."
-cp "$dotfiles_dir/start_bot" ~/.local/bin/start_bot
-chmod +x ~/.local/bin/start_bot
-echo "start_bot script installed to ~/.local/bin/"
 
 echo "All setup completed successfully!"
