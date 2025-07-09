@@ -15,19 +15,11 @@ ln -sf $dotfiles_dir/.gitattributes $HOME/.gitattributes
 ln -sf $dotfiles_dir/.agignore $HOME/.agignore
 cp -a "$dotfiles_dir/.config/zsh" "$HOME/.config/zsh"
 
-# Setup zsh configuration
-echo "Setting up zsh configuration..."
-
-# Set XDG_CONFIG_HOME if not already set
-if [[ -z "$XDG_CONFIG_HOME" ]]; then
-    export XDG_CONFIG_HOME="$HOME/.config/"
-    echo "Set XDG_CONFIG_HOME to: $XDG_CONFIG_HOME"
-fi
+export XDG_CONFIG_HOME="$HOME/.config/"
 
 # Set ZDOTDIR if zsh config directory exists
 if [[ -d "$XDG_CONFIG_HOME/zsh" ]]; then
     export ZDOTDIR="$XDG_CONFIG_HOME/zsh/"
-    echo "Set ZDOTDIR to: $ZDOTDIR"
 fi
 
 # Add environment variables to /etc/zprofile
