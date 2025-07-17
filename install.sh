@@ -52,6 +52,10 @@ git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zi
 echo "zimfw installation completed"
 
 echo "Installing claude code..."
-npm install -g @anthropic-ai/claude-code
+if command -v pnpm >/dev/null 2>&1; then
+    SHELL=zsh pnpm setup
+    source /home/wukong/.config/zsh/.zshrc
+    pnpm install -g @anthropic-ai/claude-code
+fi
 
 echo "All setup completed successfully!"
