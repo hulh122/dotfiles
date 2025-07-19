@@ -15,6 +15,13 @@ ln -sf $dotfiles_dir/.gitattributes $HOME/.gitattributes
 ln -sf $dotfiles_dir/.agignore $HOME/.agignore
 cp -a "$dotfiles_dir/.config/zsh" "$HOME/.config/zsh"
 
+echo "Installing claude code..."
+if command -v pnpm >/dev/null 2>&1; then
+    SHELL=zsh pnpm setup
+    source /home/wukong/.config/zsh/.zshrc
+    pnpm install -g @anthropic-ai/claude-code
+fi
+
 export XDG_CONFIG_HOME="$HOME/.config/"
 
 # Set ZDOTDIR if zsh config directory exists
@@ -50,12 +57,5 @@ echo "Installing zimfw..."
 rm -rf ${ZDOTDIR:-${HOME}}/.zim
 git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zim
 echo "zimfw installation completed"
-
-echo "Installing claude code..."
-if command -v pnpm >/dev/null 2>&1; then
-    SHELL=zsh pnpm setup
-    source /home/wukong/.config/zsh/.zshrc
-    pnpm install -g @anthropic-ai/claude-code
-fi
 
 echo "All setup completed successfully!"
