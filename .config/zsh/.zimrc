@@ -40,4 +40,3 @@ zmodule zsh-users/zsh-history-substring-search
 zmodule ssh
 zmodule kiesman99/zim-zoxide
 zmodule homebrew
-zmodule romkatv/powerlevel10k
