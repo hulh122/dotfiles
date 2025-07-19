@@ -15,12 +15,6 @@ ln -sf $dotfiles_dir/.gitattributes $HOME/.gitattributes
 ln -sf $dotfiles_dir/.agignore $HOME/.agignore
 cp -a "$dotfiles_dir/.config/zsh" "$HOME/.config/zsh"
 
-echo "Installing claude code..."
-if command -v pnpm >/dev/null 2>&1; then
-    SHELL=zsh pnpm setup
-    source /home/wukong/.config/zsh/.zshrc
-    pnpm install -g @anthropic-ai/claude-code
-fi
 
 export XDG_CONFIG_HOME="$HOME/.config/"
 
@@ -44,7 +38,11 @@ then
 fi
 EOF
 
-echo "zsh configuration setup completed"
+echo "Installing claude code..."
+if command -v pnpm >/dev/null 2>&1; then
+    SHELL=zsh pnpm setup
+    pnpm install -g @anthropic-ai/claude-code
+fi
 
 if command -v vim >/dev/null 2>&1; then
     echo "Installing vim configuration..."
