@@ -61,6 +61,10 @@ fi
 echo "Installing zimfw..."
 rm -rf ${ZDOTDIR:-${HOME}}/.zim
 git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zim
+
+echo "Initializing zimfw..."
+zsh -c "source ${ZDOTDIR:-${HOME}}/.zim/zimfw.zsh init -q"
+
 echo "zimfw installation completed"
 
 echo "All setup completed successfully!"
