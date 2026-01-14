@@ -15,7 +15,6 @@ ln -sf $dotfiles_dir/.gitattributes $HOME/.gitattributes
 ln -sf $dotfiles_dir/.agignore $HOME/.agignore
 cp -a "$dotfiles_dir/.config/zsh" "$HOME/.config/zsh"
 
-
 export XDG_CONFIG_HOME="$HOME/.config/"
 
 # Set ZDOTDIR if zsh config directory exists
@@ -23,7 +22,6 @@ if [[ -d "$XDG_CONFIG_HOME/zsh" ]]; then
     export ZDOTDIR="$XDG_CONFIG_HOME/zsh/"
 fi
 
-# Add environment variables to /etc/zprofile
 echo "Adding environment variables to /etc/zprofile..."
 cat << EOF | sudo tee -a /etc/zprofile > /dev/null
 
@@ -38,7 +36,7 @@ then
 fi
 EOF
 
-echo "Installing claude code..."
+echo "Setup pnpm..."
 if command -v pnpm >/dev/null 2>&1; then
     SHELL=zsh pnpm setup
 
@@ -49,6 +47,10 @@ if command -v pnpm >/dev/null 2>&1; then
     esac
 
     pnpm install -g @anthropic-ai/claude-code
+    pnpm install -g @charmland/crush
+    pnpm install -g @google/gemini-cli
+    pnpm install -g @qwen-code/qwen-code
+    pnpm install -g opencode-ai
 fi
 
 if command -v vim >/dev/null 2>&1; then
@@ -62,9 +64,4 @@ echo "Installing zimfw..."
 rm -rf ${ZDOTDIR:-${HOME}}/.zim
 git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zim
 
-echo "Initializing zimfw..."
 zsh -c "source ${ZDOTDIR:-${HOME}}/.zim/zimfw.zsh init -q"
-
-echo "zimfw installation completed"
-
-echo "All setup completed successfully!"
