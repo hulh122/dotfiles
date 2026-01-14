@@ -108,8 +108,8 @@ install() {
     msg "VIMRC location: ~/.config/vim/vimrc"
     if [ -f ~/.config/vim/vimrc ]; then
         msg "✓ vimrc file exists"
-        msg "First 10 lines of vimrc:"
-        head -10 ~/.config/vim/vimrc | sed 's/^/  /'
+        msg "Complete vimrc file (for debugging):"
+        cat ~/.config/vim/vimrc | sed 's/^/  /'
     else
         msg "✗ vimrc file not found!"
     fi
