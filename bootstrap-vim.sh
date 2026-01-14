@@ -101,11 +101,32 @@ install() {
     fi
     success "vim-plug downloaded successfully"
 
-    msg "Running PlugInstall and PlugClean..."
+    msg "=== Vim environment check ==="
+    msg "Vim version:"
+    vim --version | head -1
+    msg ""
     msg "VIMRC location: ~/.config/vim/vimrc"
-    msg "Executing: vim +PlugInstall! +PlugClean +qall!"
-    vim +PlugInstall! +PlugClean +qall!
+    if [ -f ~/.config/vim/vimrc ]; then
+        msg "✓ vimrc file exists"
+        msg "First 10 lines of vimrc:"
+        head -10 ~/.config/vim/vimrc | sed 's/^/  /'
+    else
+        msg "✗ vimrc file not found!"
+    fi
+    msg ""
+    msg "vim-plug location: ~/.local/share/vim/autoload/plug.vim"
+    if [ -f ~/.local/share/vim/autoload/plug.vim ]; then
+        msg "✓ plug.vim exists ($(wc -l < ~/.local/share/vim/autoload/plug.vim) lines)"
+    else
+        msg "✗ plug.vim not found!"
+    fi
+    msg ""
+
+    msg "Running PlugInstall and PlugClean..."
+    msg "Executing: vim -u ~/.config/vim/vimrc +PlugInstall! +PlugClean +qall!"
+    vim -u ~/.config/vim/vimrc +PlugInstall! +PlugClean +qall!
     ret="$?"
+    msg "Vim exit code: $ret"
     if [ "$ret" -ne 0 ]; then
         msg "Warning: vim exited with code $ret. This might be normal if plugins installed successfully."
     fi
