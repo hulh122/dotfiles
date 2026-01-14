@@ -88,6 +88,14 @@ sync_repo() {
         success "Successfully updated $repo_name"
     fi
 
+    # Fix line endings and encoding issues
+    msg "Fixing line endings for vimrc..."
+    if [ -f "$repo_path/vimrc" ]; then
+        # Convert CRLF to LF and ensure UTF-8 encoding
+        dos2unix "$repo_path/vimrc" 2>/dev/null || sed -i 's/\r$//' "$repo_path/vimrc"
+        success "Line endings fixed."
+    fi
+
     debug
 }
 
