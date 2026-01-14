@@ -48,7 +48,7 @@ if command -v pnpm >/dev/null 2>&1; then
 
     pnpm approve-builds -g
 
-    pnpm install -g @anthropic-ai/claude-code \
+    CI=true pnpm install -g @anthropic-ai/claude-code \
         @charmland/crush \
         @google/gemini-cli \
         @qwen-code/qwen-code \
