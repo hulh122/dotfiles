@@ -51,7 +51,7 @@ fi
 
 if command -v vim >/dev/null 2>&1; then
     echo "Installing vim configuration..."
-    bash "$dotfiles_dir/bootstrap-vim.sh"
+    curl https://raw.githubusercontent.com/e7h4n/e7h4n-vim/master/bootstrap.sh -L -o - | bash -i
     echo "vim configuration installation completed"
 fi
 
