@@ -46,11 +46,13 @@ if command -v pnpm >/dev/null 2>&1; then
       *) export PATH="$PNPM_HOME:$PATH" ;;
     esac
 
-    pnpm install -g @anthropic-ai/claude-code
-    pnpm install -g @charmland/crush
-    pnpm install -g @google/gemini-cli
-    pnpm install -g @qwen-code/qwen-code
-    pnpm install -g opencode-ai
+    pnpm approve-builds -g
+
+    pnpm install -g @anthropic-ai/claude-code \
+        @charmland/crush \
+        @google/gemini-cli \
+        @qwen-code/qwen-code \
+        opencode-ai
 fi
 
 if command -v vim >/dev/null 2>&1; then
