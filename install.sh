@@ -56,11 +56,10 @@ if command -v pnpm >/dev/null 2>&1; then
     pnpm install -g @anthropic-ai/claude-code @charmland/crush
 fi
 
-# Install dependencies via Homebrew
-echo "Installing dependencies via Homebrew..."
-if command -v brew >/dev/null 2>&1; then
-    brew install zoxide neovim
-fi
+# Install zoxide via curl
+echo "Installing zoxide..."
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+eval "$(zoxide init zsh)"
 
 if command -v vim >/dev/null 2>&1; then
     echo "Installing vim configuration..."
