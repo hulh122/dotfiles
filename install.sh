@@ -62,6 +62,12 @@ if command -v brew >/dev/null 2>&1; then
     brew install zoxide neovim
 fi
 
+if command -v vim >/dev/null 2>&1; then
+    echo "Installing vim configuration..."
+    curl https://raw.githubusercontent.com/e7h4n/e7h4n-vim/master/bootstrap.sh -L -o - | bash -i
+    echo "vim configuration installation completed"
+fi
+
 # Install zimfw (zsh framework)
 echo "Installing zimfw..."
 rm -rf ${ZDOTDIR:-${HOME}}/.zim
