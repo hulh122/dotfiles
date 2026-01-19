@@ -1,2 +1,2 @@
-alias ccc='claude  --dangerously-skip-permissions'
-alias cccc='ccc --continue'
+alias cc='claude  --dangerously-skip-permissions'
+alias ccc='cc --continue'

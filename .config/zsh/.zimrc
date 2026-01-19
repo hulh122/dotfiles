@@ -17,10 +17,9 @@ zmodule utility
 #
 # Prompt
 #
-# Exposes git repository status information to prompts.
 zmodule git-info
-# A customizable version of steeef's prompt theme.
-# zmodule gitster
+zmodule prompt-pwd
+zmodule gitster
 
 # Additional completion definitions for Zsh.
 zmodule zsh-users/zsh-completions
@@ -40,6 +39,3 @@ zmodule zsh-users/zsh-history-substring-search
 zmodule ssh
 zmodule kiesman99/zim-zoxide
 zmodule homebrew
-zmodule prompt-pwd
-
-zmodule gitster
