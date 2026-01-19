@@ -64,16 +64,16 @@ fi
 echo "Installing zoxide..."
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 
-# Install vim configuration
-if command -v vim >/dev/null 2>&1; then
-echo "Installing vim configuration..."
-curl https://raw.githubusercontent.com/e7h4n/e7h4n-vim/master/bootstrap.sh -L -o - | bash -i
-echo "vim configuration installation completed"
-fi
-
 # Install zimfw (zsh framework)
 echo "Installing zimfw..."
 rm -rf ${ZDOTDIR:-${HOME}}/.zim
 git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zim
 
 zsh -c "source ${ZDOTDIR:-${HOME}}/.zim/zimfw.zsh init -q && zimfw install"
+
+# Install vim configuration
+if command -v vim >/dev/null 2>&1; then
+echo "Installing vim configuration..."
+curl https://raw.githubusercontent.com/e7h4n/e7h4n-vim/master/bootstrap.sh -L -o - | bash -i
+echo "vim configuration installation completed"
+fi
