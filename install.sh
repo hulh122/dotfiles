@@ -50,9 +50,15 @@ if command -v pnpm >/dev/null 2>&1; then
     pnpm install -g @anthropic-ai/claude-code @charmland/crush
 fi
 
+# Install dependencies via Homebrew
+echo "Installing dependencies via Homebrew..."
+if command -v brew >/dev/null 2>&1; then
+    brew install zoxide neovim
+fi
+
 # Install zimfw (zsh framework)
 echo "Installing zimfw..."
 rm -rf ${ZDOTDIR:-${HOME}}/.zim
 git clone --recursive https://github.com/zimfw/zimfw.git ${ZDOTDIR:-${HOME}}/.zim
 
-zsh -c "source ${ZDOTDIR:-${HOME}}/.zim/zimfw.zsh init -q"
+zsh -c "source ${ZDOTDIR:-${HOME}}/.zim/zimfw.zsh init -q && zimfw install"
