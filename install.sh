@@ -14,6 +14,7 @@ ln -sf $dotfiles_dir/.gitconfig $HOME/.gitconfig
 ln -sf $dotfiles_dir/.gitattributes $HOME/.gitattributes
 ln -sf $dotfiles_dir/.agignore $HOME/.agignore
 cp -a "$dotfiles_dir/.config/zsh" "$HOME/.config/zsh"
+ln -sf "$dotfiles_dir/.config/nvim" "$HOME/.config/nvim"
 
 export XDG_CONFIG_HOME="$HOME/.config/"
 
