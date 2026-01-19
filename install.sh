@@ -49,12 +49,6 @@ if command -v pnpm >/dev/null 2>&1; then
     pnpm install -g @anthropic-ai/claude-code @charmland/crush
 fi
 
-if command -v vim >/dev/null 2>&1; then
-    echo "Installing vim configuration..."
-    curl https://raw.githubusercontent.com/e7h4n/e7h4n-vim/master/bootstrap.sh -L -o - | bash -i
-    echo "vim configuration installation completed"
-fi
-
 # Install zimfw (zsh framework)
 echo "Installing zimfw..."
 rm -rf ${ZDOTDIR:-${HOME}}/.zim
