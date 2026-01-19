@@ -17,10 +17,9 @@ cp -a "$dotfiles_dir/.config/zsh/." "$HOME/.config/zsh"
 ln -sf "$dotfiles_dir/.config/nvim" "$HOME/.config/nvim"
 
 # Install custom bin scripts
-echo "Installing custom bin scripts to /usr/local/bin..."
-sudo mkdir -p /usr/local/bin
-sudo cp "$dotfiles_dir/bin/"* /usr/local/bin/
-sudo chmod +x /usr/local/bin/push /usr/local/bin/pull /usr/local/bin/dc
+echo "Installing custom bin scripts to ~/.local/bin..."
+cp "$dotfiles_dir/bin/"* ~/.local/bin/
+chmod +x ~/.local/bin/push ~/.local/bin/pull ~/.local/bin/dc
 
 export XDG_CONFIG_HOME="$HOME/.config/"
 
@@ -29,8 +28,10 @@ if [[ -d "$XDG_CONFIG_HOME/zsh" ]]; then
     export ZDOTDIR="$XDG_CONFIG_HOME/zsh/"
 fi
 
-echo "Adding environment variables to /etc/zprofile..."
-cat << EOF | sudo tee -a /etc/zprofile > /dev/null
+# Add environment variables to /etc/zprofile (requires sudo)
+if sudo -n true 2>/dev/null; then
+    echo "Adding environment variables to /etc/zprofile..."
+    cat << EOF | sudo tee -a /etc/zprofile > /dev/null
 
 if [[ -z "\$XDG_CONFIG_HOME" ]]
 then
@@ -42,6 +43,9 @@ then
         export ZDOTDIR="\$XDG_CONFIG_HOME/zsh/"
 fi
 EOF
+else
+    echo "Skipping /etc/zprofile modification (no sudo access)"
+fi
 
 echo "Setup pnpm..."
 if command -v pnpm >/dev/null 2>&1; then
@@ -58,8 +62,7 @@ fi
 
 # Install zoxide via curl
 echo "Installing zoxide..."
-curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-eval "$(zoxide init zsh)"
+curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 
 echo "Installing vim configuration..."
 curl https://raw.githubusercontent.com/e7h4n/e7h4n-vim/master/bootstrap.sh -L -o - | bash -i
