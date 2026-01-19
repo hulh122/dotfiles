@@ -16,6 +16,12 @@ ln -sf $dotfiles_dir/.agignore $HOME/.agignore
 cp -a "$dotfiles_dir/.config/zsh/." "$HOME/.config/zsh"
 ln -sf "$dotfiles_dir/.config/nvim" "$HOME/.config/nvim"
 
+# Install custom bin scripts
+echo "Installing custom bin scripts to /usr/local/bin..."
+sudo mkdir -p /usr/local/bin
+sudo cp "$dotfiles_dir/bin/"* /usr/local/bin/
+sudo chmod +x /usr/local/bin/push /usr/local/bin/pull /usr/local/bin/dc
+
 export XDG_CONFIG_HOME="$HOME/.config/"
 
 # Set ZDOTDIR if zsh config directory exists

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+branch=`git symbolic-ref --short -q HEAD`
+
+echo "当前 pull 的分支为 ${branch}"
+
+git pull origin ${branch} $1
