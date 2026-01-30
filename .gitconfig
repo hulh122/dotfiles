@@ -6,6 +6,7 @@
     interactive = true
 [core]
     excludesfile = ~/.gitignore.global
+    pager = less -R --mouse
 [branch]
     autosetuprebase = always
 [push]
