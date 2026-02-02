@@ -7,7 +7,7 @@ RUN <<EOF
 set -eu
 
 apt-get update
-apt-get install git curl wget ca-certificates -y --no-install-recommends
+apt-get install git curl wget ca-certificates lsof -y --no-install-recommends
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -rf /tmp/*
