@@ -56,8 +56,18 @@ if command -v pnpm >/dev/null 2>&1; then
       *) export PATH="$PNPM_HOME:$PATH" ;;
     esac
 
-    pnpm install -g @anthropic-ai/claude-code @charmland/crush
+    pnpm install -g @charmland/crush
 fi
+
+# Install Claude Code with custom settings
+echo "Installing Claude Code..."
+curl -fsSL https://claude.ai/install.sh | \
+  sed -e 's|DOWNLOAD_DIR="\$HOME/.claude/downloads"|DOWNLOAD_DIR="$HOME/.cache/claude"|' \
+      -e 's|"\$binary_path" install.*|"\$binary_path" install \$version|' \
+      -e '/rm -f "\$binary_path"/d' \
+      -e '/version=\$(download_file.*latest")/a echo claude code version: $version' \
+      -e 's|if ! download_file|if [ -f "\$binary_path" ]; then echo "Using cached binary"; elif ! download_file|' | \
+  bash
 
 # Install zoxide via curl
 echo "Installing zoxide..."
