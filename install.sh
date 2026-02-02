@@ -56,7 +56,7 @@ if command -v pnpm >/dev/null 2>&1; then
       *) export PATH="$PNPM_HOME:$PATH" ;;
     esac
 
-    pnpm install -g @charmland/crush
+    pnpm install -g @charmland/crush ccusage
 fi
 
 # Install Claude Code with custom settings
