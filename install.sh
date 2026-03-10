@@ -59,6 +59,20 @@ if command -v pnpm >/dev/null 2>&1; then
     pnpm install -g @charmland/crush ccusage
 fi
 
+# Install Claude Code statusline
+echo "Installing Claude Code statusline..."
+mkdir -p "$HOME/.claude"
+cp "$dotfiles_dir/.claude/statusline.sh" "$HOME/.claude/statusline.sh"
+chmod +x "$HOME/.claude/statusline.sh"
+# Merge statusLine config into settings.json (preserve existing settings)
+if [ -f "$HOME/.claude/settings.json" ]; then
+  echo '{"statusLine":{"type":"command","command":"~/.claude/statusline.sh"}}' | \
+    jq -s '.[0] * .[1]' "$HOME/.claude/settings.json" - > "$HOME/.claude/settings.json.tmp" && \
+    mv "$HOME/.claude/settings.json.tmp" "$HOME/.claude/settings.json"
+else
+  echo '{"statusLine":{"type":"command","command":"~/.claude/statusline.sh"}}' > "$HOME/.claude/settings.json"
+fi
+
 # Install Claude Code with custom settings
 echo "Installing Claude Code..."
 curl -fsSL https://claude.ai/install.sh | \
