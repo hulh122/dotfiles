@@ -31,8 +31,8 @@ if [ -n "$BRANCH" ] && [ "$BRANCH" != "main" ] && [ "$BRANCH" != "master" ]; the
   if [ -f "$CACHE_FILE" ] && [ $(($(date +%s) - $(stat -c %Y "$CACHE_FILE"))) -lt 60 ]; then
     PR_DATA=$(cat "$CACHE_FILE")
   else
-    PR_DATA=$(timeout 3 gh pr view "$BRANCH" --json url,state,title,statusCheckRollup \
-      -q '{url: .url, state: .state, title: .title, checks: ([.statusCheckRollup[]? | select(.status == "COMPLETED" and .conclusion == "FAILURE")] | length), pending: ([.statusCheckRollup[]? | select(.status != "COMPLETED")] | length), total: ([.statusCheckRollup[]?] | length)}' 2>/dev/null || echo "")
+    PR_DATA=$(timeout 3 gh pr view "$BRANCH" --json url,state,title,statusCheckRollup,comments \
+      -q '{url: .url, state: .state, title: .title, checks: ([.statusCheckRollup[]? | select(.status == "COMPLETED" and .conclusion == "FAILURE")] | length), pending: ([.statusCheckRollup[]? | select(.status != "COMPLETED")] | length), total: ([.statusCheckRollup[]?] | length), lgtm: ([.comments[]? | select(.body | test("\\bLGTM\\b"; "i"))] | length)}' 2>/dev/null || echo "")
     echo "$PR_DATA" > "$CACHE_FILE"
   fi
 
@@ -43,6 +43,7 @@ if [ -n "$BRANCH" ] && [ "$BRANCH" != "main" ] && [ "$BRANCH" != "master" ]; the
     FAILED=$(echo "$PR_DATA" | jq -r '.checks // 0' 2>/dev/null)
     PENDING=$(echo "$PR_DATA" | jq -r '.pending // 0' 2>/dev/null)
     TOTAL=$(echo "$PR_DATA" | jq -r '.total // 0' 2>/dev/null)
+    LGTM=$(echo "$PR_DATA" | jq -r '.lgtm // 0' 2>/dev/null)
 
     if [ "$STATE" = "MERGED" ]; then
       PR_STATUS=" ${PURPLE}MERGED${RESET}"
@@ -54,6 +55,10 @@ if [ -n "$BRANCH" ] && [ "$BRANCH" != "main" ] && [ "$BRANCH" != "master" ]; the
       PR_STATUS=" ${YELLOW}${PENDING}/${TOTAL} pending${RESET}"
     elif [ "$TOTAL" -gt 0 ] 2>/dev/null; then
       PR_STATUS=" ${GREEN}${TOTAL}/${TOTAL} passed${RESET}"
+    fi
+
+    if [ "$STATE" = "OPEN" ] && [ "$LGTM" -gt 0 ] 2>/dev/null; then
+      PR_STATUS="${PR_STATUS} ${GREEN}LGTM${RESET}"
     fi
   fi
 fi
