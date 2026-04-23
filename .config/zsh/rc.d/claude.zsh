@@ -1,14 +1,6 @@
 alias cc='claude  --dangerously-skip-permissions'
 alias ccc='cc --continue'
 
-xx() {
-    codex --dangerously-bypass-approvals-and-sandbox "$@"
-}
-
-xxx() {
-    xx resume --last "$@"
-}
-
 codex_claude_compat_init() {
     local repo_root="$PWD"
 
@@ -32,10 +24,10 @@ codex_claude_compat_init() {
     fi
 }
 
-cdc() {
-    codex_claude_compat_init && xx "$@"
+xx() {
+    codex_claude_compat_init && codex --dangerously-bypass-approvals-and-sandbox "$@"
 }
 
-cdcc() {
-    codex_claude_compat_init && xxx "$@"
+xxx() {
+    xx resume --last "$@"
 }
