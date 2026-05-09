@@ -1,6 +1,10 @@
 alias cc='claude  --dangerously-skip-permissions'
 alias ccc='cc --continue'
 
+if [[ -x "$HOME/.cargo/bin/codex-switch" ]]; then
+    alias codex-switch="$HOME/.cargo/bin/codex-switch"
+fi
+
 codex_claude_compat_init() {
     local repo_root="$PWD"
 
@@ -25,7 +29,17 @@ codex_claude_compat_init() {
 }
 
 xx() {
-    codex_claude_compat_init && codex --dangerously-bypass-approvals-and-sandbox "$@"
+    local codex_switch_bin="${HOME}/.cargo/bin/codex-switch"
+    if [[ ! -x "$codex_switch_bin" ]]; then
+        codex_switch_bin="$(command -v codex-switch 2>/dev/null)"
+    fi
+
+    if [[ -z "$codex_switch_bin" ]] || ! "$codex_switch_bin" --help >/dev/null 2>&1; then
+        echo "codex-switch is not installed or cannot run. Run ~/dotfiles/install.sh after installing Rust on macOS." >&2
+        return 1
+    fi
+
+    codex_claude_compat_init && "$codex_switch_bin" run -- --dangerously-bypass-approvals-and-sandbox "$@"
 }
 
 xxx() {

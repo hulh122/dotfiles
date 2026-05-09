@@ -59,6 +59,36 @@ if command -v pnpm >/dev/null 2>&1; then
     pnpm install -g @charmland/crush ccusage @openai/codex
 fi
 
+# Install codex-switch
+if ! command -v codex-switch >/dev/null 2>&1 || ! codex-switch --help >/dev/null 2>&1; then
+    echo "Installing codex-switch..."
+    OS=$(uname -s)
+    ARCH=$(uname -m)
+    case "$OS:$ARCH" in
+        Linux:x86_64) CODEX_SWITCH_ASSET="codex-switch-x86_64-unknown-linux-musl" ;;
+        Linux:aarch64|Linux:arm64) CODEX_SWITCH_ASSET="codex-switch-aarch64-unknown-linux-musl" ;;
+        Darwin:*)
+            if ! command -v cargo >/dev/null 2>&1; then
+                echo "codex-switch does not publish macOS binaries. Install Rust first, then rerun this script:"
+                echo "  brew install rust"
+                echo "or:"
+                echo "  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+                exit 1
+            fi
+            cargo install --git https://github.com/seven332/codex-switch --locked
+            sudo install -m 0755 "$HOME/.cargo/bin/codex-switch" /usr/local/bin/codex-switch
+            ;;
+        *) echo "Unsupported platform for codex-switch: $OS $ARCH"; exit 1 ;;
+    esac
+
+    if [[ -n "${CODEX_SWITCH_ASSET:-}" ]]; then
+        CODEX_SWITCH_TMP=$(mktemp)
+        curl -fsSL -o "$CODEX_SWITCH_TMP" "https://github.com/seven332/codex-switch/releases/latest/download/${CODEX_SWITCH_ASSET}"
+        sudo install -m 0755 "$CODEX_SWITCH_TMP" /usr/local/bin/codex-switch
+        rm -f "$CODEX_SWITCH_TMP"
+    fi
+fi
+
 # Install Claude Code statusline
 echo "Installing Claude Code statusline..."
 mkdir -p "$HOME/.claude"
